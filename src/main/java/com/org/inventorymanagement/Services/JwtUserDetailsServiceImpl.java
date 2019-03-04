@@ -1,5 +1,6 @@
 package com.org.inventorymanagement.Services;
 
+import com.org.inventorymanagement.Configurations.JwtUserFactory;
 import com.org.inventorymanagement.Models.User;
 import com.org.inventorymanagement.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,7 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
         if(user == null){
             throw new UsernameNotFoundException("No user found with user name "+ username+" .");
         }else {
-
+           return JwtUserFactory.createUser(user);
         }
-        return null;
     }
 }
