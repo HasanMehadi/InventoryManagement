@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormsModule} from "@angular/forms";
+import {SignupService} from "./signup.service";
 
 
 @Component({
@@ -17,7 +18,7 @@ export class SignupComponent implements OnInit {
   pass:any;
   conPass:any;
   matched:any;
-  constructor() { }
+  constructor( private signupService:SignupService) { }
 
   ngOnInit() {
 
@@ -67,6 +68,10 @@ export class SignupComponent implements OnInit {
     let s = this.phone;
     this.user.phoneNumber = s.concat(this.user.phoneNumber);
     console.log(this.user);
+
+    this.signupService.saveUser(this.user).subscribe((response)=>{
+
+    })
   }
 
 }
