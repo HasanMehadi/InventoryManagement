@@ -41,6 +41,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByEmail(String email) {
-        return userRepository.findByEmailIgnoreCase(email);
+
+        User user= null;
+        try{
+            user = userRepository.findByEmailIgnoreCase(email);
+            if(user == null){
+                return null;
+            }
+        }catch (Exception ex){
+            System.out.println(ex.getCause().getMessage());
+        }
+        return user;
     }
 }

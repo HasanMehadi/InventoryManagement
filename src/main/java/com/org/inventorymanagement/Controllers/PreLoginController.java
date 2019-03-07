@@ -7,9 +7,7 @@ import com.org.inventorymanagement.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class PreLoginController {
@@ -33,5 +31,27 @@ public class PreLoginController {
         System.out.println("User Saved Failed");
 
         return null;
+    }
+
+    @GetMapping(value = "/checkEmail")
+    public ResponseEntity<Response> checkEmail(@RequestParam("email") String email){
+
+        User user = null;
+
+        System.out.println("Email check controller called to check email");
+
+       try{
+           user = userService.getUserByEmail(email);
+           if(user == null){
+               return new ResponseEntity<Response>(new Response("false"), HttpStatus.OK);
+           }else {
+               return new ResponseEntity<Response>(new Response("true"), HttpStatus.OK);
+           }
+
+       }catch (Exception ex){
+           System.out.println(ex.getCause().getMessage());
+           return new ResponseEntity<Response>(new Response("false"), HttpStatus.BAD_REQUEST);
+       }
+
     }
 }

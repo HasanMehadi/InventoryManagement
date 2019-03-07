@@ -2,42 +2,42 @@
 <div class="card bg-light">
   <div class="card-body mx-auto">
     <h4 class="card-title mt-3 text-center">Create Account</h4>
-    <form (ngSubmit)="createAccount()">
+    <form #signupForm="ngForm" (ngSubmit)="createAccount(signupForm)">
       <div class="form-group input-group">
         <div class="input-group-prepend">
           <span class="input-group-text"> <i class="fa fa-user"></i> </span>
         </div>
-        <input [(ngModel)]="user.firstName" name="firstName" class="form-control" placeholder="First Name" type="text">
+        <input [(ngModel)]="user.firstName" name="firstName" class="form-control" placeholder="First Name" type="text" required>
       </div> <!-- form-group// -->
       <div class="form-group input-group">
         <div class="input-group-prepend">
           <span class="input-group-text"> <i class="fa fa-users"></i> </span>
         </div>
-        <input [(ngModel)]="user.lastName" name="lastName" class="form-control" placeholder="Last Name" type="text">
+        <input [(ngModel)]="user.lastName" name="lastName" class="form-control" placeholder="Last Name" type="text" required>
       </div> <!-- form-group// -->
       <div class="form-group input-group">
         <div class="input-group-prepend">
           <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
         </div>
-        <input [(ngModel)]="user.email" name="email" class="form-control"  placeholder="Email address" type="email">
+        <input [(ngModel)]="user.email" (blur)="checkEmail()" name="email" class="form-control"  placeholder="Email address" type="email" required>
       </div> <!-- form-group// -->
       <div class="form-group input-group">
         <div class="input-group-prepend">
           <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
         </div>
-        <select [(ngModel)]="phone" name="phone" class="custom-select" style="max-width: 120px;">
+        <select [(ngModel)]="phone" name="phone" class="custom-select" style="max-width: 120px;" required>
           <option selected="+88017">+88017</option>
           <option value="+88018">+88018</option>
           <option value="+88019">+88019</option>
           <option value="+88015">+88015</option>
         </select>
-        <input [(ngModel)]="user.phoneNumber" name="phoneNumber" class="form-control" placeholder="Phone number" type="text">
+        <input [(ngModel)]="user.phoneNumber" name="phoneNumber" class="form-control" placeholder="Phone number" type="text" required>
       </div> <!-- form-group// -->
       <div class="form-group input-group">
         <div class="input-group-prepend">
           <span class="input-group-text"> <i class="fa fa-building"></i> </span>
         </div>
-        <select [(ngModel)]="user.role" name="role" class="form-control">
+        <select [(ngModel)]="user.role" name="role" class="form-control" required>
           <option selected="">ROLE</option>
           <option value="ADMIN">ADMIN</option>
           <option value="USER">USER</option>
@@ -48,13 +48,13 @@
           <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
         </div>
         <input [(ngModel)]="user.password" name="password" class="form-control" placeholder="Create password" type="password"
-               (input)="passwordErrorChecker(user.password)">
+               (input)="passwordErrorChecker(user.password)" required>
       </div> <!-- form-group// -->
       <div class="form-group input-group">
         <div class="input-group-prepend">
           <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
         </div>
-        <input [(ngModel)]="rematch" name="rematch" class="form-control" placeholder="Repeat password" type="password" (input)="matchPass(rematch)">
+        <input [(ngModel)]="rematch" name="rematch" class="form-control" placeholder="Repeat password" type="password" (input)="matchPass(rematch)" required>
       </div> <!-- form-group// -->
       <div class="alert alert-danger" role="alert" *ngIf="message">
         {{message}}
@@ -65,15 +65,12 @@
       <div class="alert alert-success" role="alert" *ngIf="matched">
         Password Matched
       </div>
-      <div class="form-group input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text"> <i class="fa fa-check"></i> </span>
-        </div>
-        <label>Enable </label>
-        <input [(ngModel)]="user.enabled" name="enabled" class="form-control" placeholder="Enable" type="checkbox">
-      </div> <!-- form-group// -->
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="user.enabled"/>
+        <label class="form-check-label">Enable User to Login</label>
+      </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>
+        <button [disabled]="signupForm.form.invalid" type="submit" class="btn btn-primary btn-block"> Create Account  </button>
       </div> <!-- form-group// -->
       <p class="text-center">Have an account? <a href="">Log In</a> </p>
     </form>

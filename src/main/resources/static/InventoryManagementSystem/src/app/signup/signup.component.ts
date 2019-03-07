@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {SignupService} from "./signup.service";
+import {Router, RouterModule} from '@angular/router';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class SignupComponent implements OnInit {
   pass:any;
   conPass:any;
   matched:any;
-  constructor( private signupService:SignupService) { }
+  constructor( private signupService:SignupService, private router: Router) { }
 
   ngOnInit() {
 
@@ -63,14 +64,32 @@ export class SignupComponent implements OnInit {
   };
 
 
-  createAccount(){
+  createAccount( signupForm: any){
 
     let s = this.phone;
     this.user.phoneNumber = s.concat(this.user.phoneNumber);
-    console.log(this.user);
+    console.log(this.user);;
 
     this.signupService.saveUser(this.user).subscribe((response)=>{
+       if(response){
+         console.log(response);
+         signupForm.reset();
+         this.router.navigate(['login']);
+       }
 
+    },error => {
+      console.log(error)
+    })
+  }
+
+  checkEmail(){
+
+    console.log(this.user.email);
+
+    this.signupService.checkEmail(this.user.email).subscribe((response)=>{
+      if(response){
+        console.log(response);
+      }
     })
   }
 
