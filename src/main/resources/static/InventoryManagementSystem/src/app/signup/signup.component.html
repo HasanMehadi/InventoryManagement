@@ -32,7 +32,7 @@
           <option value="+88015">+88015</option>
         </select>
         <input [(ngModel)]="user.phoneNumber" name="phoneNumber" class="form-control" placeholder="Phone number" type="text" required>
-      </div> <!-- form-group// -->
+      </div>
       <div class="form-group input-group">
         <div class="input-group-prepend">
           <span class="input-group-text"> <i class="fa fa-building"></i> </span>
@@ -42,14 +42,14 @@
           <option value="ADMIN">ADMIN</option>
           <option value="USER">USER</option>
         </select>
-      </div> <!-- form-group end.// -->
+      </div>
       <div class="form-group input-group">
         <div class="input-group-prepend">
           <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
         </div>
         <input [(ngModel)]="user.password" name="password" class="form-control" placeholder="Create password" type="password"
                (input)="passwordErrorChecker(user.password)" required>
-      </div> <!-- form-group// -->
+      </div>
       <div class="form-group input-group">
         <div class="input-group-prepend">
           <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
@@ -66,7 +66,7 @@
         Password Matched
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" [(ngModel)]="user.enabled"/>
+        <input class="form-check-input" type="checkbox" [(ngModel)]="user.enabled" name="enabled"/>
         <label class="form-check-label">Enable User to Login</label>
       </div>
       <div class="form-group">
