@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService} from "./login.service";
 import {Router} from "@angular/router";
-import {el} from "@angular/platform-browser/testing/src/browser_util";
+import { LoginAuthService } from "../login/login-auth.service";
 
 @Component({
   selector: 'app-login',
@@ -12,9 +12,11 @@ export class LoginComponent implements OnInit {
 
   private user: any;
 
-  constructor(private loginService: LoginService , private router: Router) {
+  constructor(private loginService: LoginService , private router: Router,
+              private loginAuthService :LoginAuthService) {
 
     this.user= {};
+    this.loginAuthService.isLoggedIn();
   }
 
   ngOnInit() {
@@ -23,6 +25,8 @@ export class LoginComponent implements OnInit {
   public loginUser(loginForm: any) {
 
     this.loginService.loginUser(this.user).subscribe((response)=>{
+
+      console.log(response);
 
       if(response){
         if(response.token){

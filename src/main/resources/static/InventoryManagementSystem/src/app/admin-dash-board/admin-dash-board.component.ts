@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginAuthService } from "../login/login-auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-dash-board',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminDashBoardComponent implements OnInit {
 
-  constructor() { }
+  constructor( private loginAuthService :LoginAuthService, private router : Router) {
+
+    this.loginAuthService.isLoggedIn();
+  }
 
   ngOnInit() {
+
+  }
+
+  logout(){
+    localStorage.removeItem("currentUser");
+    this.router.navigate(["login"])
+
   }
 
 }

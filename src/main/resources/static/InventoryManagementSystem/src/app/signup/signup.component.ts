@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {SignupService} from "./signup.service";
 import {Router, RouterModule} from '@angular/router';
+import { LoginAuthService } from "../login/login-auth.service";
 
 
 @Component({
@@ -19,7 +20,11 @@ export class SignupComponent implements OnInit {
   pass:any;
   conPass:any;
   matched:any;
-  constructor( private signupService:SignupService, private router: Router) { }
+  constructor( private signupService:SignupService, private router: Router,
+               private loginAuthService :LoginAuthService) {
+
+    this.loginAuthService.isLoggedIn();
+  }
 
   ngOnInit() {
 

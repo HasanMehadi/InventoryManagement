@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginAuthService } from "../login/login-auth.service";
 
 @Component({
   selector: 'app-user-dash-board',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserDashBoardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private loginAuthService: LoginAuthService) {
+
+    this.loginAuthService.isLoggedIn();
+  }
 
   ngOnInit() {
+
+
   }
 
 }
