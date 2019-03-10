@@ -11,6 +11,7 @@ import {AdminDashBoardComponent} from './admin-dash-board/admin-dash-board.compo
 import {UserDashBoardComponent} from './user-dash-board/user-dash-board.component';
 import {LoginService} from "./login/login.service";
 import {AuthGuard} from "./auth.guard";
+import {AdminService} from "./admin-dash-board/admin.service";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import {AuthGuard} from "./auth.guard";
     HttpClientModule,
 
   ],
-  providers: [SignupService, LoginService,AuthGuard],
+  providers: [SignupService, LoginService,AuthGuard,AdminService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

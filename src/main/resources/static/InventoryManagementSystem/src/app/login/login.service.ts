@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {ConstantService} from "../constant.service";
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +11,12 @@ export class LoginService {
   mainUrl="http://localhost:8080/";
   headers =new HttpHeaders({'Access-Control-Allow-Origin':'*'});
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private constantService:ConstantService) {
     this.http = http;
   }
 
   public loginUser(user:any): Observable<any>{
-
-    return this.http.post(this.mainUrl+"login",user,{headers: this.headers});
+    return this.http.post(this.constantService.mainUrl+"login",user,{headers: this.headers});
 
   }
 }

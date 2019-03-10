@@ -10,7 +10,7 @@ export class LoginAuthService {
 
   isLoggedIn(){
 
-    if(localStorage.getItem("currentUser")){
+    if(localStorage.getItem('currentUser')){
       this.subject.next({status : true});
     }else {
       this.subject.next({status : false});
