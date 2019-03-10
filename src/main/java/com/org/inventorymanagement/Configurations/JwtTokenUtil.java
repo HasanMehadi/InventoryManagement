@@ -33,7 +33,14 @@ public class JwtTokenUtil {
 
         try{
             final Claims claims = getClaimsFromToken(token);
-            username = claims.getSubject();
+            //username = claims.getSubject();
+
+
+            String stringToSearch = claims.getSubject();
+            String exclusion = "email:";
+            System.out.println(stringToSearch.substring(stringToSearch.indexOf(exclusion)).substring(exclusion.length(), stringToSearch.substring(stringToSearch.indexOf(exclusion)).indexOf(",")));
+            username = (stringToSearch.substring(stringToSearch.indexOf(exclusion)).substring(exclusion.length(), stringToSearch.substring(stringToSearch.indexOf(exclusion)).indexOf(",")));
+
 
         }catch (Exception ex){
 
