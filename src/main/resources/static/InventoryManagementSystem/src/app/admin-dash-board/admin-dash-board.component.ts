@@ -30,9 +30,12 @@ export class AdminDashBoardComponent implements OnInit {
       this.users = users;
 
     });
+
+    this.adminService.getBrand(token).subscribe();
   }
 
   check(){
     this.getAllUser(this.loginUser.token);
+
   }
 }

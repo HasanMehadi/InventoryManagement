@@ -61,7 +61,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and().
                 sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().
                 authorizeRequests().
-                antMatchers("/**").permitAll().
                 antMatchers("/checkEmail").permitAll().
                 antMatchers("/registration").permitAll().
                 antMatchers("/login").permitAll().
@@ -73,7 +72,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
 
         http.headers().cacheControl();
-        http.headers().httpStrictTransportSecurity().includeSubDomains(true).maxAgeInSeconds(31536000);
+        http.headers().httpStrictTransportSecurity().includeSubDomains(true).maxAgeInSeconds(3600);
     }
 
     @Bean

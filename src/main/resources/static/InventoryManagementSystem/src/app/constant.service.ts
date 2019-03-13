@@ -5,7 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class ConstantService {
 
-  mainUrl = "http://localhost:8080/"
+  mainUrl = "http://localhost:8080/";
+
+  brandUrl = this.mainUrl+"brand";
 
   constructor() { }
 

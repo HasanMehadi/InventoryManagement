@@ -1,10 +1,10 @@
 package com.org.inventorymanagement.Controllers;
 
 import com.org.inventorymanagement.Configurations.JwtTokenUtil;
-import com.org.inventorymanagement.Models.JwtUser;
+import com.org.inventorymanagement.Entities.JwtUser;
 import com.org.inventorymanagement.Exceptions.UnAuthorizedException;
 import com.org.inventorymanagement.Services.UserDTO;
-import com.org.inventorymanagement.Models.User;
+import com.org.inventorymanagement.Entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

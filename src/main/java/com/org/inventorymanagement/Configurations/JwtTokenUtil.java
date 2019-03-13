@@ -1,6 +1,6 @@
 package com.org.inventorymanagement.Configurations;
 
-import com.org.inventorymanagement.Models.JwtUser;
+import com.org.inventorymanagement.Entities.JwtUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

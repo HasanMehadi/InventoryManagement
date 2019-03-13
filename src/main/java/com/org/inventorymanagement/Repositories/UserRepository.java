@@ -1,6 +1,6 @@
 package com.org.inventorymanagement.Repositories;
 
-import com.org.inventorymanagement.Models.User;
+import com.org.inventorymanagement.Entities.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

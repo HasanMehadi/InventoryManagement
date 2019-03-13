@@ -1,7 +1,7 @@
 package com.org.inventorymanagement.Configurations;
 
-import com.org.inventorymanagement.Models.JwtUser;
-import com.org.inventorymanagement.Models.User;
+import com.org.inventorymanagement.Entities.JwtUser;
+import com.org.inventorymanagement.Entities.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

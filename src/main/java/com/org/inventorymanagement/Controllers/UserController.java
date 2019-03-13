@@ -1,7 +1,7 @@
 package com.org.inventorymanagement.Controllers;
 
+import com.org.inventorymanagement.Entities.User;
 import com.org.inventorymanagement.Services.UserService;
-import com.org.inventorymanagement.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class UserController {
 
     @GetMapping("/users")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<User>> getAllUser(){
+    public ResponseEntity<List<User>> getAllUser() {
 
         System.out.println("User controller called to see all users");
 
@@ -28,21 +28,17 @@ public class UserController {
 
         return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 
-
-
     }
 
     @GetMapping("/getuser")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<User> getUser(Principal principal){
+    public ResponseEntity<User> getUser(Principal principal) {
 
         System.out.println("User controller called to see all users");
 
         User user = userService.getUserByEmail(principal.getName());
 
         return new ResponseEntity<User>(user, HttpStatus.OK);
-
-
 
     }
 }

@@ -3,19 +3,20 @@ package com.org.inventorymanagement.Controllers;
 
 import com.org.inventorymanagement.Configurations.Response;
 import com.org.inventorymanagement.Services.UserService;
-import com.org.inventorymanagement.Models.User;
+import com.org.inventorymanagement.Entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping(value = "/")
 public class PreLoginController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping(value = "/registration")
+    @PostMapping(value = "registration")
     public ResponseEntity<Response> registration(@RequestBody User user){
 
         System.out.println("pre login controller called for registration ");
@@ -33,7 +34,7 @@ public class PreLoginController {
         return null;
     }
 
-    @GetMapping(value = "/checkEmail")
+    @GetMapping(value = "checkEmail")
     public ResponseEntity<Response> checkEmail(@RequestParam("email") String email){
 
         User user = null;

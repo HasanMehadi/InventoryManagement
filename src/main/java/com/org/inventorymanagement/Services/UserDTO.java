@@ -1,6 +1,6 @@
 package com.org.inventorymanagement.Services;
 
-import com.org.inventorymanagement.Models.User;
+import com.org.inventorymanagement.Entities.User;
 
 public class UserDTO {
 

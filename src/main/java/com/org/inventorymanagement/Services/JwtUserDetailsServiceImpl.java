@@ -1,7 +1,7 @@
 package com.org.inventorymanagement.Services;
 
 import com.org.inventorymanagement.Configurations.JwtUserFactory;
-import com.org.inventorymanagement.Models.User;
+import com.org.inventorymanagement.Entities.User;
 import com.org.inventorymanagement.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

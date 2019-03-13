@@ -20,4 +20,11 @@ export class AdminService {
     const headers = new HttpHeaders({'Authorization': 'Bearer '+token});
     return this.http.get(this.constantService.mainUrl+'users',{headers: headers});
   }
+
+  getBrand(token: any):Observable<any>{
+
+    console.log("get brand called");
+    const headers = new HttpHeaders({'Authorization': 'Bearer '+token});
+    return this.http.get(this.constantService.mainUrl+'brand',{headers: headers});
+  }
 }

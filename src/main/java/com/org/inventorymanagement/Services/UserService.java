@@ -1,6 +1,6 @@
 package com.org.inventorymanagement.Services;
 
-import com.org.inventorymanagement.Models.User;
+import com.org.inventorymanagement.Entities.User;
 
 import java.util.List;
 
