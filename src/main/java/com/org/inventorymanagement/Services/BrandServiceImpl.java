@@ -3,6 +3,9 @@ package com.org.inventorymanagement.Services;
 import com.org.inventorymanagement.Entities.Brand;
 import com.org.inventorymanagement.Repositories.BrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +19,7 @@ public class BrandServiceImpl implements BrandService{
     private BrandRepository brandRepository;
 
     @Override
+    @Cacheable(value ="inventoryManagement", key = "#brand")
     public Brand save(Brand brand){
 
         try{
@@ -40,6 +44,7 @@ public class BrandServiceImpl implements BrandService{
     }
 
     @Override
+    @Cacheable(value ="inventoryManagement", key = "#id")
     public Brand getBrandById(long id) {
 
         Brand brand = null;
@@ -56,6 +61,7 @@ public class BrandServiceImpl implements BrandService{
     }
 
     @Override
+    @CachePut(value ="inventoryManagement", key = "#brand")
     public Brand update(Brand brand) {
         try{
 
@@ -73,6 +79,7 @@ public class BrandServiceImpl implements BrandService{
     }
 
     @Override
+    @CacheEvict(value = "inventoryManagement", key = "#id")
     public Boolean delete(long id) {
         try{
 

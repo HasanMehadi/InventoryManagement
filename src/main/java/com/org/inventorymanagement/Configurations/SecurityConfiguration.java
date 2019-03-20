@@ -64,6 +64,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 antMatchers("/checkEmail").permitAll().
                 antMatchers("/registration").permitAll().
                 antMatchers("/login").permitAll().
+                antMatchers("/metrics").permitAll().
+                antMatchers("/metrics/**").permitAll().
+                antMatchers("/actuator").permitAll().
+                antMatchers("/actuator/**").permitAll().
                 antMatchers(HttpMethod.OPTIONS).permitAll().
                 anyRequest().authenticated();
 
