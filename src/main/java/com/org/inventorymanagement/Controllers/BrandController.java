@@ -3,10 +3,11 @@ package com.org.inventorymanagement.Controllers;
 
 import com.org.inventorymanagement.Configurations.Response;
 import com.org.inventorymanagement.Entities.Brand;
-import com.org.inventorymanagement.Models.BaseDTO;
 import com.org.inventorymanagement.Models.BrandDTO;
 import com.org.inventorymanagement.Services.BrandService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,9 +16,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping(value = "/brand")
 public class BrandController {
+
+    private final Logger log = LoggerFactory.getLogger(BrandController.class);
 
     @Autowired
     private BrandService brandService;
@@ -99,41 +103,41 @@ public class BrandController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete")
-    public  ResponseEntity<Response> delete(@RequestBody long id){
+    public ResponseEntity<Response> delete(@RequestBody long id) {
 
         System.out.println("Brand delete controller called");
 
-        try{
-              boolean b = brandService.delete(id);
+        try {
+            boolean b = brandService.delete(id);
 
-              if(b){
-                  return new ResponseEntity<Response>(new Response("Brand Delete Successfully"),HttpStatus.OK);
-              }else {
-                  return new ResponseEntity<Response>(new Response("No Brand Delete"),HttpStatus.OK);
-              }
-        }catch (Exception ex){
+            if (b) {
+                return new ResponseEntity<Response>(new Response("Brand Delete Successfully"), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Response>(new Response("No Brand Delete"), HttpStatus.OK);
+            }
+        } catch (Exception ex) {
 
             System.out.println(ex.getCause().getMessage());
 
-            return new ResponseEntity<Response>(new Response("Unable to delete Brand"),HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Response>(new Response("Unable to delete Brand"), HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
 
     }
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/gets")
-    public ResponseEntity<Page<BrandDTO>> showPage(Pageable pageable){
+    public ResponseEntity<Page<BrandDTO>> showPage(Pageable pageable) {
 
-        System.out.println("Brand Pageable called ");
-
-        try{
-
-            return new ResponseEntity<Page<BrandDTO>>(brandService.findPage(pageable),HttpStatus.OK);
-
-        }catch (Exception ex){
-            System.out.println(ex.getCause().getMessage());
+        try {
+            log.debug("Inside try");
+            return new ResponseEntity<Page<BrandDTO>>(brandService.findPage(pageable), HttpStatus.OK);
+        } catch (Exception ex) {
+            log.debug(ex.getMessage());
+            return ResponseEntity.notFound().header(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase()).build();
         }
 
-        return null;
     }
+
+
 }
