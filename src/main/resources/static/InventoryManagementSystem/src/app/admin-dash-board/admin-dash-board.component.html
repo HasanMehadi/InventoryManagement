@@ -1,3 +1,63 @@
-<button type="button" (click)="check()">
-  click
-</button>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active" *ngIf="currentStatus.status">
+        <a class="nav-link">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item dropdown" *ngIf="currentStatus.status">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0 -align-right">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="logOut()">Logout</button>&nbsp;
+    </form>
+  </div>
+</nav>
+
+
+
+<div class="container-fluid">
+  <div class="custom-table">
+    <div class="table-head">
+      <div class="row">
+
+        <div class="col">Brand Name</div>
+        <div class="col">Brand Description</div>
+        <div class="col">App Brand Id</div>
+        <div class="col">Brand Comment</div>
+      </div>
+    </div>
+
+    <div class="table-body">
+      <div *ngFor="let brand of brands|paginate:{itemsPerPage: size,currentPage: page,totalItems: totalElements}"
+           class="row">
+
+        <div class="col">{{brand.brandNm}}</div>
+        <div class="col">{{brand.brandDescr}}</div>
+        <div class="col">{{brand.appBrandId}}</div>
+        <div class="col">{{brand.brandCmnt}}</div>
+      </div>
+    </div>
+    <!-- <pagination-controls
+                           (pageChange)="page = $event"
+     &lt;!&ndash;(pageChange)="pageChanged($event)"&ndash;&gt;
+     >
+     </pagination-controls>-->
+
+    <pagination-controls
+      (pageChange)="page = $event; pageChanged(page)"
+      nextLabel="Next"
+      previousLabel="Previous"
+      responsive="true"
+      screenReaderCurrentLabel="You're on page">
+    </pagination-controls>
+  </div>
+</div>

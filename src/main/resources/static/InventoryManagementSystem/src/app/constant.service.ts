@@ -6,6 +6,8 @@ import { Injectable } from '@angular/core';
 export class ConstantService {
 
   mainUrl = "http://localhost:8080/";
+  response:any;
+  currentStatus: any;
 
   brandUrl = this.mainUrl+"brand";
 

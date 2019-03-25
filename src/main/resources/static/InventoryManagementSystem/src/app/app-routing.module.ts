@@ -31,7 +31,7 @@ const routes: Routes = [
   }
   ,
   {
-    path: 'login',
+    path: '',
     component: LoginComponent,
     data: {
       title: 'Login'

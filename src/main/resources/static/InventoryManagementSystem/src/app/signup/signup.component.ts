@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {SignupService} from "./signup.service";
 import {Router, RouterModule} from '@angular/router';
 import { LoginAuthService } from "../login/login-auth.service";
+declare var $: any;
 
 
 @Component({
@@ -20,13 +21,19 @@ export class SignupComponent implements OnInit {
   pass:any;
   conPass:any;
   matched:any;
-  constructor( private signupService:SignupService, private router: Router,
-               private loginAuthService :LoginAuthService) {
+  constructor( private signupService:SignupService,
+               private router: Router,
+               private loginAuthService :LoginAuthService,
+               private el: ElementRef) {
 
     this.loginAuthService.isLoggedIn();
   }
 
   ngOnInit() {
+
+    $('input[required],select[required]').each(function(){
+      $(this).prev('label').after("<span style='color:red'>*</span>");
+    });
 
     this.user= {};
     this.phone=null;
@@ -34,6 +41,15 @@ export class SignupComponent implements OnInit {
     this.matched = false;
   }
 
+  @HostListener('submit', ['$event'])
+  onFormSubmit() {
+    const invalidElements = this.el.nativeElement.querySelectorAll('.ng-invalid');
+    if (invalidElements.length > 0) {
+      invalidElements[1].focus();
+    } else {
+//console();
+    }
+  }
 
   passwordErrorChecker(newPass) {
     if (!newPass) {

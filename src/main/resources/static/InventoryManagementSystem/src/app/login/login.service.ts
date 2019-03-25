@@ -8,7 +8,6 @@ import {ConstantService} from "../constant.service";
 })
 export class LoginService {
 
-  mainUrl="http://localhost:8080/";
   headers =new HttpHeaders({'Access-Control-Allow-Origin':'*'});
 
   constructor(private http: HttpClient, private constantService:ConstantService) {

@@ -3,10 +3,13 @@ package com.org.inventorymanagement.Controllers;
 
 import com.org.inventorymanagement.Configurations.Response;
 import com.org.inventorymanagement.Entities.Brand;
+import com.org.inventorymanagement.Models.BaseDTO;
 import com.org.inventorymanagement.Models.BrandDTO;
 import com.org.inventorymanagement.Services.BrandService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -88,7 +91,7 @@ public class BrandController {
             brandDTO = new BrandDTO();
             brandDTO.setErrorCode(404);
             brandDTO.setErrorMsg("Brand not Saved");
-            return new ResponseEntity<BrandDTO>(brandDTO, HttpStatus.OK);
+            return new ResponseEntity<BrandDTO>(brandDTO, HttpStatus.BAD_REQUEST);
 
         }
 
@@ -117,6 +120,20 @@ public class BrandController {
         }
 
     }
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/gets")
+    public ResponseEntity<Page<BrandDTO>> showPage(Pageable pageable){
 
+        System.out.println("Brand Pageable called ");
 
+        try{
+
+            return new ResponseEntity<Page<BrandDTO>>(brandService.findPage(pageable),HttpStatus.OK);
+
+        }catch (Exception ex){
+            System.out.println(ex.getCause().getMessage());
+        }
+
+        return null;
+    }
 }

@@ -12,6 +12,7 @@ import {UserDashBoardComponent} from './user-dash-board/user-dash-board.componen
 import {LoginService} from "./login/login.service";
 import {AuthGuard} from "./auth.guard";
 import {AdminService} from "./admin-dash-board/admin.service";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {AdminService} from "./admin-dash-board/admin.service";
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    NgxPaginationModule
 
   ],
   providers: [SignupService, LoginService,AuthGuard,AdminService],

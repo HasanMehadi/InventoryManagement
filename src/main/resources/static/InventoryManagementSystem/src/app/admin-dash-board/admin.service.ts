@@ -14,17 +14,18 @@ export class AdminService {
   }
 
   getAllUser(token: any):Observable<any>{
-
-    console.log(token);
-
     const headers = new HttpHeaders({'Authorization': 'Bearer '+token});
     return this.http.get(this.constantService.mainUrl+'users',{headers: headers});
   }
 
   getBrand(token: any):Observable<any>{
-
-    console.log("get brand called");
     const headers = new HttpHeaders({'Authorization': 'Bearer '+token});
     return this.http.get(this.constantService.mainUrl+'brand',{headers: headers});
+  }
+
+  getBrandPage(token:any,page:any,size:any):Observable<any>{
+    const headers = new HttpHeaders({'Authorization': 'Bearer '+token});
+    return this.http.get(this.constantService.mainUrl+'brand/gets',{headers: headers, params: {page: page.toString(),size:size.toString(),sort:"brandNm,desc",}});
+
   }
 }
