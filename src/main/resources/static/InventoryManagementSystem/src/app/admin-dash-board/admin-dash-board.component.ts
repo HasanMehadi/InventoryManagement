@@ -31,34 +31,16 @@ export class AdminDashBoardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAllUser(this.loginUser.token, this.page);
-  }
 
-  pageChangeFire(page: number) {
-    console.log("hello >>>> " + page);
-    this.getAllUser(this.loginUser.token, page-1);
-
-  }
-
-  getAllUser(token: any, pageNumber) {
-    this.adminService.getBrandPage(token, pageNumber, this.size).subscribe((brands) => {
-      this.brands = brands.content;
-      this.totalElements = brands.totalElements;
-    })
-  }
-
-  check() {
-    this.getAllUser(this.loginUser.token, this.page);
-
-  }
-
-  pageChanged(page: number) {
-    this.getAllUser(this.loginUser.token, page-1);
   }
 
   logOut(){
 
     localStorage.removeItem('currentUser');
     this.router.navigate(['login']);
+  }
+
+  brandAdd(){
+    this.router.navigate(['admin/brandAdd']);
   }
 }

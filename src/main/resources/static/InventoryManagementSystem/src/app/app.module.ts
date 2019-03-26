@@ -13,6 +13,8 @@ import {LoginService} from "./login/login.service";
 import {AuthGuard} from "./auth.guard";
 import {AdminService} from "./admin-dash-board/admin.service";
 import {NgxPaginationModule} from "ngx-pagination";
+import {BrandModule} from "./brand/brand/brand.module";
+import { BrandAddComponent } from './brand/brand-add/brand-add.component';
 
 @NgModule({
   declarations: [
@@ -20,14 +22,15 @@ import {NgxPaginationModule} from "ngx-pagination";
     SignupComponent,
     LoginComponent,
     AdminDashBoardComponent,
-    UserDashBoardComponent
+    UserDashBoardComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    BrandModule
 
   ],
   providers: [SignupService, LoginService,AuthGuard,AdminService],

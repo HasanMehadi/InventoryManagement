@@ -1,9 +1,6 @@
 package com.org.inventorymanagement.Entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -17,9 +14,13 @@ public class Brand {
     private String brandDescr;
     private String brandCmnt;
     private String appBrandId;
+    @Column(nullable = true)
     private Timestamp crtDttm;
+    @Column(nullable = true)
     private Integer crtBy;
+    @Column(nullable = true)
     private Timestamp updDttm;
+    @Column(nullable = true)
     private Integer updBy;
 
     public Brand() {

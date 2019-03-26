@@ -1,0 +1,100 @@
+<div class="container-fluid">
+
+  <h1 *ngIf="!editBol">Change Brand Info</h1>
+  <h1 *ngIf="editBol">Add New Brand</h1>
+
+  <form #brandForm="ngForm" (ngSubmit)="addBrand()" class="form-horizontal" name="brandForm" novalidate>
+
+    <div class="row">
+      <div class="col-md-4" >
+        <div class="form-group" hidden>
+          <label class="control-label">Brand Id</label>
+          <input [(ngModel)]="brand.brandId" class="form-control" readonly id="brand_id"
+                 name="brand_id" type="text">
+        </div>
+        <div class="form-group">
+          <label class="control-label">Brand Name</label>
+          <input [(ngModel)]="brand.brandNm" class="form-control" id="brand_nm"
+                 name="brand_nm" placeholder="Brand name" required type="text">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="control-label">App Brand Id</label>
+          <input [(ngModel)]="brand.appBrandId" class="form-control" id="iso_num_code" name="app_brand_id"
+                 placeholder="App Brand Id" required type="text">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="control-label">Brand Comment</label>
+          <textarea [(ngModel)]="brand.brandCmnt" class="form-control" id="brand_cmnt" name="brand_cmnt" required
+                    placeholder="Brand Comment" required type="text"></textarea>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="control-label">Brand Description</label>
+          <textarea [(ngModel)]="brand.brandDescr" class="form-control" id="brand_descr" name="brand_descr" required
+                    placeholder="Brand Description" required type="text"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <div class="col-sm-12">
+          <button [disabled]="!brandForm.dirty" class="btn btn-success" type="submit">Submit</button>
+          &nbsp;
+          <button (click)="cancel(insert)"  class="btn btn-warning" type="button">Back</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<div class="modal fade" id="cancelModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title float-left">Cancel Notification</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>You have changes. Do you want to continue? </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info float-left" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger float-right" (click)="confirmCancel()" data-dismiss="modal">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="saveModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title float-left">Save Notification</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p *ngIf="editBol">Do you want to save ? </p>
+        <p *ngIf="!editBol">Do you want to update ? </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info float-left" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-success float-right" (click)="confirmSave()" data-dismiss="modal">
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

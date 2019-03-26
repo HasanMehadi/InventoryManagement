@@ -89,7 +89,7 @@ export class SignupComponent implements OnInit {
 
     let s = this.phone;
     this.user.phoneNumber = s.concat(this.user.phoneNumber);
-    console.log(this.user);;
+    console.log(this.user);
 
     this.signupService.saveUser(this.user).subscribe((response)=>{
        if(response){

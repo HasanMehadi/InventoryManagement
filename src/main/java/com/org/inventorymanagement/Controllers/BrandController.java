@@ -36,7 +36,10 @@ public class BrandController {
         System.out.println("Brand Add controller called");
         try {
 
-            brandDTO = modelMapper.map(brandService.save(brand), BrandDTO.class);
+            /*brandDTO = modelMapper.map(brandService.save(brand), BrandDTO.class);*/
+            brand = brandService.save(brand);
+
+            brandDTO = modelMapper.map(brand,BrandDTO.class);
             return new ResponseEntity<BrandDTO>(brandDTO, HttpStatus.OK);
         } catch (Exception ex) {
 
