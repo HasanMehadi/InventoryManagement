@@ -14,7 +14,7 @@
       <div *ngFor="let brand of brands|paginate:{itemsPerPage: size,currentPage: page,totalItems: totalElements}"
            class="row">
 
-        <div class="col">{{brand.brandNm}}</div>
+        <div class="col"><a (click)='editBrand(brand.brandId)' title="Edit">{{brand.brandNm}}</a></div>
         <div class="col">{{brand.brandDescr}}</div>
         <div class="col">{{brand.appBrandId}}</div>
         <div class="col">{{brand.brandCmnt}}</div>

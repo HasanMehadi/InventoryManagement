@@ -85,8 +85,40 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <p *ngIf="editBol">Do you want to save ? </p>
-        <p *ngIf="!editBol">Do you want to update ? </p>
+        <form #brandForm1="ngForm" class="form-horizontal" name="brandForm1" novalidate [contentEditable]="false">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label">Brand Name</label>
+                <input [(ngModel)]="brand.brandNm" class="form-control" id="=name"
+                       name="name" type="text">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label">App Brand Id</label>
+                <input [(ngModel)]="brand.appBrandId" class="form-control" id="bid"
+                       name="bid" type="text">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label">Comment</label>
+                <input [(ngModel)]="brand.brandCmnt" class="form-control" id="cmnt"
+                       name="cmnt" type="text">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label">Description</label>
+                <input [(ngModel)]="brand.brandDescr" class="form-control" id="descr"
+                       name="descr" type="text">
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-info float-left" data-dismiss="modal">No</button>

@@ -34,6 +34,10 @@ const routes: Routes = [
       {
         path:'brandAdd',
         component:BrandAddComponent, canActivate:[AuthGuard]
+      },
+      {
+        path:'brandEdit/:paramKey',
+        component:BrandAddComponent, canActivate:[AuthGuard]
       }
     ]
 

@@ -9,6 +9,9 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -28,6 +31,7 @@ public class BrandController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/save")
+    @Cacheable(value = "inventoryManagement",key = "#id")
     public ResponseEntity<BrandDTO> save(@RequestBody BrandDTO brandDTO) {
 
         ModelMapper modelMapper = new ModelMapper();
@@ -36,10 +40,7 @@ public class BrandController {
         System.out.println("Brand Add controller called");
         try {
 
-            /*brandDTO = modelMapper.map(brandService.save(brand), BrandDTO.class);*/
-            brand = brandService.save(brand);
-
-            brandDTO = modelMapper.map(brand,BrandDTO.class);
+            brandDTO = modelMapper.map(brandService.save(brand), BrandDTO.class);
             return new ResponseEntity<BrandDTO>(brandDTO, HttpStatus.OK);
         } catch (Exception ex) {
 
@@ -55,7 +56,10 @@ public class BrandController {
 
     @GetMapping("/get")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<BrandDTO> getBrand(@RequestBody long id) {
+    @Cacheable(value = "inventoryManagement", key="#id")
+    public ResponseEntity<BrandDTO> getBrand(@RequestParam long id) {
+
+        System.out.println("Brand Get Item Called");
 
         BrandDTO brandDTO = null;
 
@@ -83,6 +87,7 @@ public class BrandController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update")
+    @CachePut(value = "inventoryManagement",key = "#id")
     public ResponseEntity<BrandDTO> update(@RequestBody BrandDTO brandDTO) {
 
         System.out.println("Brand update controller called");
@@ -106,6 +111,7 @@ public class BrandController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete")
+    @CacheEvict(value = "inventoryManagement",key = "#id")
     public ResponseEntity<Response> delete(@RequestBody long id) {
 
         System.out.println("Brand delete controller called");
@@ -121,17 +127,15 @@ public class BrandController {
         } catch (Exception ex) {
 
             System.out.println(ex.getCause().getMessage());
-
             return new ResponseEntity<Response>(new Response("Unable to delete Brand"), HttpStatus.INTERNAL_SERVER_ERROR);
-
         }
-
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/gets")
     public ResponseEntity<Page<BrandDTO>> showPage(Pageable pageable) {
 
+        System.out.println("Brand Pageable Called");
         try {
             log.debug("Inside try");
             return new ResponseEntity<Page<BrandDTO>>(brandService.findPage(pageable), HttpStatus.OK);

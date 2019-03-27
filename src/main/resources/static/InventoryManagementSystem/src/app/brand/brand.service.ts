@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ConstantService} from "../constant.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
@@ -10,24 +10,32 @@ import {Observable} from "rxjs/index";
 export class BrandService {
 
 
-
-  constructor(private router: Router, private constantService: ConstantService, private http: HttpClient) { }
-
-  getBrand(token: any):Observable<any>{
-    const headers = new HttpHeaders({'Authorization': 'Bearer '+token});
-    return this.http.get(this.constantService.mainUrl+'brand',{headers: headers});
+  constructor(private router: Router, private constantService: ConstantService, private http: HttpClient) {
   }
 
-  getBrandPage(token:any,page:any,size:any):Observable<any>{
-    const headers = new HttpHeaders({'Authorization': 'Bearer '+token});
-    return this.http.get(this.constantService.mainUrl+'brand/gets',{headers: headers, params: {page: page.toString(),size:size.toString(),sort:"brandNm,desc",}});
+  getBrand(token: any, id:any): Observable<any> {
+    const headers = new HttpHeaders({'Authorization': 'Bearer ' + token});
+    return this.http.get(this.constantService.brandUrl + '/get', {headers: headers, params: {id: id}});
+  }
+
+  getBrandPage(token: any, page: any, size: any): Observable<any> {
+    const headers = new HttpHeaders({'Authorization': 'Bearer ' + token});
+    return this.http.get(this.constantService.mainUrl + 'brand/gets', {
+      headers: headers,
+      params: {page: page.toString(), size: size.toString(), sort: "brandNm,desc",}
+    });
 
   }
 
-  saveBrand(token:any,brand: any):Observable<any>{
+  saveBrand(token: any, brand: any): Observable<any> {
+    const headers = new HttpHeaders({'Authorization': 'Bearer ' + token});
+    return this.http.post(this.constantService.brandUrl + '/save', brand, {headers: headers});
 
-    const headers = new HttpHeaders({'Authorization': 'Bearer '+token});
-    return this.http.post(this.constantService.brandUrl+'/save',brand,{headers: headers});
+  }
+
+  updateBrand(token: any, brand: any): Observable<any> {
+    const headers = new HttpHeaders({'Authorization': 'Bearer ' + token});
+    return this.http.put(this.constantService.brandUrl + '/update', brand, {headers: headers});
 
   }
 }

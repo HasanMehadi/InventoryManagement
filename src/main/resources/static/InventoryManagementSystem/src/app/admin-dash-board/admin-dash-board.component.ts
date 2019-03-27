@@ -19,18 +19,21 @@ export class AdminDashBoardComponent implements OnInit {
   private totalElements: number = 0;
   public currentStatus: any;
 
-  constructor(private adminService: AdminService, private loginAuthService: LoginAuthService, private router: Router) {
+  constructor(private adminService: AdminService,
+              private loginAuthService: LoginAuthService,
+              private router: Router,
+              ) {
 
     this.loginAuthService.isLoggedIn();
     this.loginUser = JSON.parse(localStorage.getItem('currentUser'));
 
     this.currentStatus = this.loginAuthService.getStatus().subscribe( (currentStatus)=>{
       this.currentStatus = currentStatus;
-      console.log(currentStatus);
     })
   }
 
   ngOnInit() {
+
 
   }
 

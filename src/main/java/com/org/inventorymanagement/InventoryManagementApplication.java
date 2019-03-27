@@ -36,9 +36,9 @@ public class InventoryManagementApplication {
 
     }
 
-    @Bean
-    public CacheManager cacheManager(){
-        return new ConcurrentMapCacheManager("inventoryManagement");
-    }
+//    @Bean
+//    public CacheManager cacheManager(){
+//        return new ConcurrentMapCacheManager("inventoryManagement");
+//    }
 
 }
