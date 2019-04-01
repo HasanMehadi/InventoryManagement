@@ -7,9 +7,17 @@ import {UserDashBoardComponent} from "./user-dash-board/user-dash-board.componen
 import {AuthGuard} from "./auth.guard";
 import {BrandComponent} from "./brand/brand.component";
 import {BrandAddComponent} from "./brand/brand-add/brand-add.component";
+import {CurrencyAddComponent} from "./currency/currency-add/currency-add.component";
 
 
 const routes: Routes = [
+  {
+    path: 'currency',
+    component: CurrencyAddComponent,
+    data: {
+      title: 'Currency Add'
+    }
+  },
   {
     path: 'signUp',
     component: SignupComponent,

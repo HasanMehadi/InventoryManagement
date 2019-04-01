@@ -1,9 +1,11 @@
-package com.org.inventorymanagement.Services;
+package com.org.inventorymanagement.ServiceImplementation;
 
 import com.org.inventorymanagement.Configurations.ModelEntityConversionUtil;
 import com.org.inventorymanagement.Entities.Brand;
 import com.org.inventorymanagement.Models.BrandDTO;
 import com.org.inventorymanagement.Repositories.BrandRepository;
+import com.org.inventorymanagement.Services.BrandService;
+import com.org.inventorymanagement.Services.PaginationUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;

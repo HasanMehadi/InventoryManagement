@@ -1,9 +1,6 @@
 package com.org.inventorymanagement.Entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -36,10 +33,15 @@ public class InvtProductMst {
     private Long minWeightPerItm;
     private Long maxWeightItm;
     private Long prodWeightUom;
+    @Column(nullable = true)
     private Boolean activeSts;
+    @Column(nullable = true)
     private String setItmFlg;
+    @Column(nullable = true)
     private String salesItmFlg;
+    @Column(nullable = true)
     private String assemblyRequried;
+    @Column(nullable = true)
     private String dropshipFlg;
     private String sampleImgFileNm;
     private String sampleImgFilePath;

@@ -14,7 +14,8 @@ import {AuthGuard} from "./auth.guard";
 import {AdminService} from "./admin-dash-board/admin.service";
 import {NgxPaginationModule} from "ngx-pagination";
 import {BrandModule} from "./brand/brand/brand.module";
-import { BrandAddComponent } from './brand/brand-add/brand-add.component';
+import {ProductModule} from "./product/product/product.module";
+import {CurrencyModule} from "./currency/currency/currency.module";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,9 @@ import { BrandAddComponent } from './brand/brand-add/brand-add.component';
     FormsModule,
     HttpClientModule,
     NgxPaginationModule,
-    BrandModule
+    BrandModule,
+    ProductModule,
+    CurrencyModule
 
   ],
   providers: [SignupService, LoginService,AuthGuard,AdminService],

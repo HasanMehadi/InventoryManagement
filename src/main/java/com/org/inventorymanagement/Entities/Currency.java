@@ -1,9 +1,6 @@
 package com.org.inventorymanagement.Entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -17,9 +14,14 @@ public class Currency {
     private String currCode;
     private String isoAlphaCode;
     private String isoNumCode;
+    private String imagePath;
+    @Column(nullable = true)
     private Timestamp crtDttm;
+    @Column(nullable = true)
     private Integer crtBy;
+    @Column(nullable = true)
     private Timestamp updDttm;
+    @Column(nullable = true)
     private Integer updBy;
 
     public Currency() {
@@ -97,6 +99,18 @@ public class Currency {
         this.updBy = updBy;
     }
 
+    public void setCurrId(Long currId) {
+        this.currId = currId;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -121,6 +135,7 @@ public class Currency {
                 ", currCode='" + currCode + '\'' +
                 ", isoAlphaCode='" + isoAlphaCode + '\'' +
                 ", isoNumCode='" + isoNumCode + '\'' +
+                ", imagePath='" + imagePath + '\'' +
                 ", crtDttm=" + crtDttm +
                 ", crtBy=" + crtBy +
                 ", updDttm=" + updDttm +
