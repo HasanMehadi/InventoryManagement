@@ -10,6 +10,7 @@ export class ConstantService {
   currentStatus: any;
 
   brandUrl = this.mainUrl+"brand";
+  currencyUrl = this.mainUrl+"currency";
 
   constructor() { }
 

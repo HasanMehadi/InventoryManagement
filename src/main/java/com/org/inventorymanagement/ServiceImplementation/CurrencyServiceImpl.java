@@ -5,7 +5,11 @@ import com.org.inventorymanagement.Models.CurrencyDTO;
 import com.org.inventorymanagement.Services.CurrencyService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
+@Transactional
 public class CurrencyServiceImpl implements CurrencyService {
     @Override
     public Currency save(Currency currency) {

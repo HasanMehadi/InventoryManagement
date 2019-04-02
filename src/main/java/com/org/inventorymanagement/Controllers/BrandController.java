@@ -31,7 +31,6 @@ public class BrandController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/save")
-    @Cacheable(value = "inventoryManagement",key = "#id")
     public ResponseEntity<BrandDTO> save(@RequestBody BrandDTO brandDTO) {
 
         ModelMapper modelMapper = new ModelMapper();
@@ -56,7 +55,6 @@ public class BrandController {
 
     @GetMapping("/get")
     @PreAuthorize("hasRole('ADMIN')")
-    @Cacheable(value = "inventoryManagement", key="#id")
     public ResponseEntity<BrandDTO> getBrand(@RequestParam long id) {
 
         System.out.println("Brand Get Item Called");
@@ -87,7 +85,6 @@ public class BrandController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update")
-    @CachePut(value = "inventoryManagement",key = "#id")
     public ResponseEntity<BrandDTO> update(@RequestBody BrandDTO brandDTO) {
 
         System.out.println("Brand update controller called");
@@ -111,7 +108,6 @@ public class BrandController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete")
-    @CacheEvict(value = "inventoryManagement",key = "#id")
     public ResponseEntity<Response> delete(@RequestBody long id) {
 
         System.out.println("Brand delete controller called");

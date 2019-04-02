@@ -20,7 +20,7 @@
       </div>
       <div class="col-md-4">
         <div class="form-group">
-          <label class="control-label">App Currency Id</label>
+          <label class="control-label"> Currency Code</label>
           <input [(ngModel)]="currency.currCode" class="form-control" id="currCode" name="currCode"
                  placeholder="Currency Code"  type="text">
         </div>
@@ -49,7 +49,7 @@
           <label class="control-label">Image</label>
           <!--<input [(ngModel)]="currency.imagePath" class="form-control" id="imagePath" (change)="handleFileInput($event)"-->
                  <!--name="imagePath" type="file">-->
-          <input type='file' (change)="onFileSelected($event)" />
+          <input type='file' (change)="onFileSelected($event)" name="imagePath" id="imagePath"/>
         </div>
       </div>
       <div class="col-md-6">
@@ -100,50 +100,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <form #currencyForm1="ngForm" class="form-horizontal" name="currencyForm1" novalidate [contentEditable]="false">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="control-label">currency Name</label>
-                <input [(ngModel)]="currency.currNm" class="form-control" id="=currNm1"
-                       name="currNm" type="text">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="control-label">Code</label>
-                <input [(ngModel)]="currency.currCode" class="form-control" id="currCode1"
-                       name="currCode" type="text">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="control-label">Iso Code</label>
-                <input [(ngModel)]="currency.isoAlphaCode" class="form-control" id="isoAlphaCode1"
-                       name="cmnt" type="text">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="control-label">Number Code</label>
-                <input [(ngModel)]="currency.isoNumCode" class="form-control" id="isoNumCode1"
-                       name="descr" type="text">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="control-label">Iso Code</label>
-                <input [(ngModel)]="currency.imagePath" class="form-control" id="imagePath1"
-                       name="imagePath" type="file" >
-              </div>
-            </div>
-
-          </div>
-        </form>
+        <p>Do you want to Save/Update ? </p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-info float-left" data-dismiss="modal">No</button>

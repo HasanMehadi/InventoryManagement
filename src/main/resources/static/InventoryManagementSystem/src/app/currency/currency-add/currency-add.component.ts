@@ -1,6 +1,7 @@
 import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
 import {LoginAuthService} from "../../login/login-auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {CurrencyService} from "../currency.service";
 
 
 declare var $: any;
@@ -16,11 +17,14 @@ export class CurrencyAddComponent implements OnInit {
   currency: any = {};
   editBol: boolean = true;
   url = '';
+  file: File;
+
 
   constructor(private el: ElementRef,
               private loginAuthService: LoginAuthService,
               private router: Router,
-              private activatedRouter: ActivatedRoute) {
+              private activatedRouter: ActivatedRoute,
+              private currencyService: CurrencyService) {
     var input = document.querySelector('input[type=file]');
 
     this.loginAuthService.isLoggedIn();
@@ -60,19 +64,44 @@ export class CurrencyAddComponent implements OnInit {
   }
 
   addCurrency() {
+    $('#saveModal').modal('show');
 
   }
 
   onFileSelected(event){
 
     if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-
+      let reader = new FileReader();
+      this.file = event.target.files[0];
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
       reader.onload = (event:any)=>{
         this.url = event.target.result;
       }
+    }
+  }
+
+
+  confirmSave(){
+
+    if(this.currency.currId == null){
+      this.currency.crtBy = this.loginUser.user.id;
+      this.currency.crtDttm = new Date();
+      this.currencyService.saveCurrencyWithFile(this.loginUser.token, this.currency,this.file).subscribe((response) => {
+        console.log(response);
+        this.router.navigate(['admin'])
+      }, (error) => {
+
+      })
+    }else{
+      this.currency.updBy = this.loginUser.user.id;
+      this.currency.updDttm = new Date();
+      this.currencyService.updateCurrency(this.loginUser.token, this.currency).subscribe((response) => {
+        console.log(response);
+        this.router.navigate(['admin'])
+      }, (error) => {
+
+      })
     }
   }
 
