@@ -103,5 +103,19 @@ public class CurrencyDTO extends BaseDTO implements Serializable {
         this.updBy = updBy;
     }
 
-
+    @Override
+    public String toString() {
+        return "CurrencyDTO{" +
+                "currId=" + currId +
+                ", currNm='" + currNm + '\'' +
+                ", currCode='" + currCode + '\'' +
+                ", isoAlphaCode='" + isoAlphaCode + '\'' +
+                ", isoNumCode='" + isoNumCode + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                ", crtDttm=" + crtDttm +
+                ", crtBy=" + crtBy +
+                ", updDttm=" + updDttm +
+                ", updBy=" + updBy +
+                '}';
+    }
 }

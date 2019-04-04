@@ -3,6 +3,7 @@ import {FormsModule} from "@angular/forms";
 import {SignupService} from "./signup.service";
 import {Router, RouterModule} from '@angular/router';
 import { LoginAuthService } from "../login/login-auth.service";
+import {isBoolean} from "util";
 declare var $: any;
 
 
@@ -21,6 +22,8 @@ export class SignupComponent implements OnInit {
   pass:any;
   conPass:any;
   matched:any;
+  success:any;
+  emailMessage:any;
   constructor( private signupService:SignupService,
                private router: Router,
                private loginAuthService :LoginAuthService,
@@ -39,6 +42,7 @@ export class SignupComponent implements OnInit {
     this.phone=null;
     this.notMatched = true;
     this.matched = false;
+    this.success = false;
   }
 
   @HostListener('submit', ['$event'])
@@ -57,11 +61,15 @@ export class SignupComponent implements OnInit {
     } else {
       let pattern = new RegExp("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}");
       if (newPass.length < 8) {
-        this.message = 'Your password is required to be at least 8 characters.'
+        this.message = 'Your password is required to be at least 8 characters.';
+        this.matched = false;
       } else if (newPass.length > 50) {
-        this.message = 'Your password cannot be longer than 50 characters.'
+        this.message = 'Your password cannot be longer than 50 characters.';
+        this.matched=false;
       } else if (("" + pattern.test(newPass)) == 'false') {
-        this.message = 'Password must contain at least one number, one uppercase letter , one lowercase letter and at least 8 or more characters.'
+        this.message = 'Password must contain at least one number, one uppercase letter , ' +
+          'one lowercase letter and at least 8 or more characters.';
+        this.matched= false;
       } else {
         this.message= '';
       }
@@ -87,31 +95,45 @@ export class SignupComponent implements OnInit {
 
   createAccount( signupForm: any){
 
-    let s = this.phone;
-    this.user.phoneNumber = s.concat(this.user.phoneNumber);
-    console.log(this.user);
+    if(this.matched && this.notMatched && this.success=='true'){
+      let s = this.phone;
+      this.user.phoneNumber = s.concat(this.user.phoneNumber);
+      console.log(this.user);
+      this.signupService.saveUser(this.user).subscribe((response)=>{
+        if(response){
+          console.log(response);
+          signupForm.reset();
+          this.router.navigate(['login']);
+        }
 
-    this.signupService.saveUser(this.user).subscribe((response)=>{
-       if(response){
-         console.log(response);
-         signupForm.reset();
-         this.router.navigate(['login']);
-       }
-
-    },error => {
-      console.log(error)
-    })
+      },error => {
+        console.log(error)
+      })
+    }
   }
 
   checkEmail(){
 
     console.log(this.user.email);
+    this.success=null;
 
-    this.signupService.checkEmail(this.user.email).subscribe((response)=>{
-      if(response){
-        console.log(response);
-      }
-    })
+    let pattern = new RegExp("[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}");
+
+    if (("" + pattern.test(this.user.email)) == 'false'){
+
+      this.success = "false";
+      this.emailMessage = "Invalid Email Address";
+    }else{
+      this.signupService.checkEmail(this.user.email).subscribe((response)=>{
+        if(response){
+          console.log(response);
+          this.success=response.message;
+          this.emailMessage = "Email Already Used";
+        }
+      })
+    }
+
+
   }
 
 }

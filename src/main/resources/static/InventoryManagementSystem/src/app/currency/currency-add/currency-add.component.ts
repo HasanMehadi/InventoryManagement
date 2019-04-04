@@ -73,11 +73,16 @@ export class CurrencyAddComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
       this.file = event.target.files[0];
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
+      let len = event.target.files.length;
 
-      reader.onload = (event:any)=>{
-        this.url = event.target.result;
+      for(var i =0;i<len;i++){
+        console.log(event.target.files[i]);
       }
+      // reader.readAsDataURL(event.target.files[0]); // read file as data url
+      //
+      // reader.onload = (event:any)=>{
+      //   this.url = event.target.result;
+      // }
     }
   }
 

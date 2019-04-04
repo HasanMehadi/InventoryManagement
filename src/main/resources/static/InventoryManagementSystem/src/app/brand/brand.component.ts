@@ -34,7 +34,6 @@ export class BrandComponent implements OnInit {
 
   getBrandByPage(token: any, pageNumber) {
     this.brandService.getBrandPage(token, pageNumber, this.size).subscribe((brands) => {
-      console.log(brands.content);
       this.brands = brands.content;
       this.totalElements = brands.totalElements;
     })

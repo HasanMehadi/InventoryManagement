@@ -6,7 +6,7 @@
          dynamicConfig="true">
 
     <cache name="inventoryManagement"
-           maxElementsInMemory="1000"
+           maxElementsInMemory="100"
            eternal="false"
            overflowToDisk="false"
            timeToLiveSeconds="300"

@@ -68,6 +68,8 @@ public class BrandController {
             Brand brand = brandService.getBrandById(id);
             brandDTO = modelMapper.map(brand, BrandDTO.class);
 
+            System.out.println(brandDTO);
+
             if (brand != null) {
                 return new ResponseEntity<BrandDTO>(brandDTO, HttpStatus.OK);
             }
@@ -88,11 +90,14 @@ public class BrandController {
     public ResponseEntity<BrandDTO> update(@RequestBody BrandDTO brandDTO) {
 
         System.out.println("Brand update controller called");
+        System.out.println(brandDTO.toString());
+        System.out.println("-----------------------");
         try {
 
             ModelMapper modelMapper = new ModelMapper();
             Brand brand = modelMapper.map(brandDTO, Brand.class);
             brandDTO = modelMapper.map(brandService.update(brand), BrandDTO.class);
+            System.out.println(brandDTO.toString());
             return new ResponseEntity<BrandDTO>(brandDTO, HttpStatus.OK);
         } catch (Exception ex) {
 

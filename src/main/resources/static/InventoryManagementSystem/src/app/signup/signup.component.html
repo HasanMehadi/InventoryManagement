@@ -21,6 +21,9 @@
         </div>
         <input [(ngModel)]="user.email" (blur)="checkEmail()" name="email" class="form-control"  placeholder="Email address" type="email" required>
       </div> <!-- form-group// -->
+      <div class="alert alert-danger" role="alert" *ngIf='success=="false"'>
+        {{emailMessage}}
+      </div>
       <div class="form-group input-group">
         <div class="input-group-prepend">
           <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
@@ -67,7 +70,7 @@
       </div>
       <div class="form-check">
         <input class="form-check-input" type="checkbox" [(ngModel)]="user.enabled" name="enabled"/>
-        <label class="form-check-label">Enable User to Login</label>
+        <label class="form-check-label">Enable User</label>
       </div>
       <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>

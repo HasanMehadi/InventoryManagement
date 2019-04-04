@@ -73,7 +73,7 @@ export class BrandAddComponent implements OnInit {
       this.brand.crtBy = this.loginUser.user.id;
       this.brand.crtDttm = new Date();
       this.brandService.saveBrand(this.loginUser.token, this.brand).subscribe((response) => {
-        console.log(response);
+
         this.router.navigate(['admin'])
       }, (error) => {
 
@@ -82,7 +82,6 @@ export class BrandAddComponent implements OnInit {
       this.brand.updBy = this.loginUser.user.id;
       this.brand.updDttm = new Date();
       this.brandService.updateBrand(this.loginUser.token, this.brand).subscribe((response) => {
-        console.log(response);
         this.router.navigate(['admin'])
       }, (error) => {
 
@@ -92,7 +91,6 @@ export class BrandAddComponent implements OnInit {
 
   getBrand(id:any){
     this.brandService.getBrand(this.loginUser.token,id).subscribe((response)=>{
-      console.log(response);
       this.brand = response;
     })
   }

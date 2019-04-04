@@ -87,4 +87,19 @@ public class BrandDTO extends BaseDTO implements Serializable {
     public void setUpdBy(Integer updBy) {
         this.updBy = updBy;
     }
+
+    @Override
+    public String toString() {
+        return "BrandDTO{" +
+                "brandId=" + brandId +
+                ", brandNm='" + brandNm + '\'' +
+                ", brandDescr='" + brandDescr + '\'' +
+                ", brandCmnt='" + brandCmnt + '\'' +
+                ", appBrandId='" + appBrandId + '\'' +
+                ", crtDttm=" + crtDttm +
+                ", crtBy=" + crtBy +
+                ", updDttm=" + updDttm +
+                ", updBy=" + updBy +
+                '}';
+    }
 }

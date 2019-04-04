@@ -44,9 +44,9 @@ public class PreLoginController {
        try{
            user = userService.getUserByEmail(email);
            if(user == null){
-               return new ResponseEntity<Response>(new Response("false"), HttpStatus.OK);
-           }else {
                return new ResponseEntity<Response>(new Response("true"), HttpStatus.OK);
+           }else {
+               return new ResponseEntity<Response>(new Response("false"), HttpStatus.OK);
            }
 
        }catch (Exception ex){

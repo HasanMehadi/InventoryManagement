@@ -75,6 +75,7 @@ public class BrandServiceImpl implements BrandService {
     public Brand update(Brand brand) {
         try {
 
+            System.out.println("Cache Not Called");
             brand = brandRepository.save(brand);
 
             if (brand != null) {
@@ -89,10 +90,11 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    @CacheEvict(value = "inventoryManagement", key = "#id")
+    @CacheEvict(value = "inventoryManagement", allEntries=true)
     public Boolean delete(long id) {
         try {
 
+            System.out.println("Cache Not Called");
             brandRepository.deleteById(id);
             return true;
         } catch (Exception ex) {
@@ -102,9 +104,10 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    @Cacheable(value = "inventoryManagement", key = "#pageable")
+    //@Cacheable(value = "inventoryManagement", key = "#pageable.pageNumber")
     public Page<BrandDTO> findPage(Pageable pageable) {
         try{
+            System.out.println("Cache Not Called");
             Page<Brand> brandPage = brandRepository.findAll(pageable);
 
             Page<BrandDTO> brandDTOS = ModelEntityConversionUtil.convertPage(brandPage, BrandDTO.class);
