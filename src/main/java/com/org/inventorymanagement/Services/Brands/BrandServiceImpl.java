@@ -1,10 +1,9 @@
-package com.org.inventorymanagement.ServiceImplementation;
+package com.org.inventorymanagement.Services.Brands;
 
 import com.org.inventorymanagement.Configurations.ModelEntityConversionUtil;
 import com.org.inventorymanagement.Entities.Brand;
 import com.org.inventorymanagement.Models.BrandDTO;
 import com.org.inventorymanagement.Repositories.BrandRepository;
-import com.org.inventorymanagement.Services.BrandService;
 import com.org.inventorymanagement.Services.PaginationUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +21,25 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+
 public class BrandServiceImpl implements BrandService {
 
+    private final BrandRepository brandRepository;
+
     @Autowired
-    private BrandRepository brandRepository;
+    public BrandServiceImpl(BrandRepository brandRepository) {
+        this.brandRepository = brandRepository;
+    }
 
     @Override
-    @Cacheable(value = "inventoryManagement", key = "#brand")
-    public Brand save(Brand brand) {
+    @Cacheable(value = "brands", key = "#brand.brandId",unless = "#result== null")
+    @Transactional(rollbackFor = Exception.class, timeout = 5000)
+    public BrandDTO save(BrandDTO brandDTO) {
 
         try {
-            return brandRepository.save(brand);
+
+            Brand brand = ModelEntityConversionUtil.convert(brandDTO,Brand.class);
+            return ModelEntityConversionUtil.convert(brandRepository.save(brand),BrandDTO.class);
         } catch (Exception ex) {
             System.out.println(ex.getCause().getMessage());
         }
@@ -54,49 +60,45 @@ public class BrandServiceImpl implements BrandService {
     }*/
 
     @Override
-    @Cacheable(value = "inventoryManagement", key = "#id")
-    public Brand getBrandById(long id) {
+    @Cacheable(value = "brands", key = "#brandDTO.brandId")
+    @Transactional(rollbackFor = Exception.class, timeout = 5000, readOnly = true)
+    public BrandDTO getBrandById(BrandDTO brandDTO) {
 
-        Brand brand = null;
 
         try {
-            brand = brandRepository.getOne(id);
-            if (brand == null) {
-                return null;
-            }
+            //Brand brand = ModelEntityConversionUtil.convert(brandDTO,Brand.class);
+//            brand = brandRepository.getOne(id);
+//            if (brand == null) {
+//                return null;
+//            }
+            return ModelEntityConversionUtil.convert(brandRepository.getOne(brandDTO.getBrandId()),BrandDTO.class);
         } catch (Exception ex) {
             System.out.println(ex.getCause().getMessage());
+            return null;
         }
-        return brand;
     }
 
     @Override
-    @CachePut(value = "inventoryManagement", key = "#brand")
-    public Brand update(Brand brand) {
+    @CachePut(value = "inventoryManagement", key = "#brandDTO.brandId", unless = "#result== null")
+    @Transactional(rollbackFor = Exception.class, timeout = 5000)
+    public BrandDTO update(BrandDTO brandDTO) {
         try {
-
-            System.out.println("Cache Not Called");
-            brand = brandRepository.save(brand);
-
-            if (brand != null) {
-                return brand;
-            }
+            return ModelEntityConversionUtil.convert(brandRepository.save(ModelEntityConversionUtil.convert(brandDTO, Brand.class)),BrandDTO.class);
         } catch (Exception ex) {
             System.out.println(ex.getCause().getMessage());
             return null;
         }
 
-        return null;
     }
 
     @Override
-    @CacheEvict(value = "inventoryManagement", allEntries=true)
-    public Boolean delete(long id) {
+    @CacheEvict(value = "brands",key = "#brandDTO.brandId", allEntries=true)
+    @Transactional(rollbackFor = Exception.class, timeout = 5000)
+    public Boolean delete(BrandDTO brandDTO) {
         try {
-
-            System.out.println("Cache Not Called");
-            brandRepository.deleteById(id);
+            brandRepository.deleteById(brandDTO.getBrandId());
             return true;
+
         } catch (Exception ex) {
             System.out.println(ex.getCause().getMessage());
             return false;
@@ -104,15 +106,13 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    //@Cacheable(value = "inventoryManagement", key = "#pageable.pageNumber")
+    @Transactional(rollbackFor = Exception.class, timeout = 5000, readOnly = true)
     public Page<BrandDTO> findPage(Pageable pageable) {
         try{
             System.out.println("Cache Not Called");
             Page<Brand> brandPage = brandRepository.findAll(pageable);
 
-            Page<BrandDTO> brandDTOS = ModelEntityConversionUtil.convertPage(brandPage, BrandDTO.class);
-
-            return brandDTOS;
+            return ModelEntityConversionUtil.convertPage(brandPage, BrandDTO.class);
 
         }catch (Exception ex){
             System.out.println(ex.getCause().getMessage());

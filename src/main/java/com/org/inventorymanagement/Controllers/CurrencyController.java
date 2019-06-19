@@ -1,10 +1,9 @@
 package com.org.inventorymanagement.Controllers;
 
 import com.org.inventorymanagement.Configurations.Response;
-import com.org.inventorymanagement.Entities.Brand;
 import com.org.inventorymanagement.Entities.Currency;
 import com.org.inventorymanagement.Models.CurrencyDTO;
-import com.org.inventorymanagement.Services.CurrencyService;
+import com.org.inventorymanagement.Services.Currencies.CurrencyService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,92 +31,59 @@ public class CurrencyController {
 
     private final Logger log = LoggerFactory.getLogger(CurrencyController.class);
 
-    @Autowired
-    private CurrencyService currencyService;
+    private final CurrencyService currencyService;
 
-    @Value("${app.upload.path}")
-    private String uploadPath;
+    @Autowired
+    public CurrencyController(CurrencyService currencyService) {
+        this.currencyService = currencyService;
+    }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<CurrencyDTO> save(@RequestPart("currency") CurrencyDTO currencyDTO, @RequestPart("file") MultipartFile multipartFile) {
+    public ResponseEntity<CurrencyDTO> save(final @RequestPart("currency") CurrencyDTO currencyDTO, final @RequestPart("file") MultipartFile multipartFile) {
 
-        String storedLocation;
-        Path rootLocation = Paths.get(uploadPath);
 
-        String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        String extension = StringUtils.getFilenameExtension(filename);
 
+        /*ModelMapper modelMapper = new ModelMapper();
+        Currency currency = modelMapper.map(currencyDTO, Currency.class);*/
         try {
-            if (multipartFile.isEmpty()) {
-                throw new IOException("Failed to store empty file " + filename);
-            }
-            if (filename.contains("..")) {
-                // This is a security check
-                throw new IOException(
-                        "Cannot store file with relative path outside current directory "
-                                + filename);
-            }
-            Files.copy(multipartFile.getInputStream(), rootLocation.resolve(currencyDTO.getCurrNm()+"."+extension),
-                    StandardCopyOption.REPLACE_EXISTING);
-
-            storedLocation = rootLocation + currencyDTO.getCurrNm()+"."+extension;
-            currencyDTO.setImagePath(storedLocation);
-
-        } catch (Exception e) {
-           e.getCause().getMessage();
-        }
-
-        ModelMapper modelMapper = new ModelMapper();
-        Currency currency = modelMapper.map(currencyDTO, Currency.class);
-
-        System.out.println("Currency Add controller called");
-        try {
-
-            currencyDTO = modelMapper.map(currencyService.save(currency), CurrencyDTO.class);
-            return new ResponseEntity<CurrencyDTO>(currencyDTO, HttpStatus.OK);
+            return new ResponseEntity<>(currencyService.save(currencyDTO, multipartFile), HttpStatus.OK);
         } catch (Exception ex) {
 
             System.out.println(ex.getCause().getMessage());
-            currencyDTO = new CurrencyDTO();
+            CurrencyDTO DTO = new CurrencyDTO();
             currencyDTO.setErrorCode(404);
-            currencyDTO.setErrorMsg("Brand not Saved");
-            return new ResponseEntity<CurrencyDTO>(currencyDTO, HttpStatus.OK);
-
+            currencyDTO.setErrorMsg("Currency not Saved");
+            return new ResponseEntity<>(DTO, HttpStatus.BAD_REQUEST);
         }
 
     }
 
     @GetMapping("/get")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<CurrencyDTO> getCurrency(@RequestParam long id) {
+    public ResponseEntity<CurrencyDTO> getCurrency(final @RequestParam long id) {
 
-        System.out.println("Currency Get Item Called");
-
-        CurrencyDTO currencyDTO= null;
-
-        ModelMapper modelMapper = new ModelMapper();
 
         try {
 
+            CurrencyDTO currencyDTO= new CurrencyDTO();
+            currencyDTO.setCurrId(id);
+            /*
             Currency currency = currencyService.getCurrencyById(id);
             currencyDTO = modelMapper.map(currency, CurrencyDTO.class);
+            System.out.println(currencyDTO);*/
 
-            System.out.println(currencyDTO);
+            return new ResponseEntity<>(currencyDTO, HttpStatus.OK);
 
-            if (currency != null) {
-                return new ResponseEntity<CurrencyDTO>(currencyDTO, HttpStatus.OK);
-            }
 
         } catch (Exception ex) {
             System.out.println(ex.getCause().getMessage());
-            currencyDTO = new CurrencyDTO();
+            CurrencyDTO currencyDTO = new CurrencyDTO();
             currencyDTO.setErrorCode(404);
-            currencyDTO.setErrorMsg("No Brand Found");
-            return new ResponseEntity<CurrencyDTO>(currencyDTO, HttpStatus.BAD_REQUEST);
+            currencyDTO.setErrorMsg("No Currency Found");
+            return new ResponseEntity<>(currencyDTO, HttpStatus.BAD_REQUEST);
         }
 
-        return null;
     }
 
 
@@ -125,20 +91,20 @@ public class CurrencyController {
     @DeleteMapping("/delete")
     public ResponseEntity<Response> delete(@RequestBody long id) {
 
-        System.out.println("Currency delete controller called");
-
         try {
-            boolean b = currencyService.delete(id);
+            CurrencyDTO DTO = new CurrencyDTO();
+            DTO.setCurrId(id);
+            boolean b = currencyService.delete(DTO);
 
             if (b) {
-                return new ResponseEntity<Response>(new Response("Currency Delete Successfully"), HttpStatus.OK);
+                return new ResponseEntity<>(new Response("Currency Delete Successfully"), HttpStatus.OK);
             } else {
-                return new ResponseEntity<Response>(new Response("No Currency Delete"), HttpStatus.OK);
+                return new ResponseEntity<>(new Response("No Currency Delete"), HttpStatus.OK);
             }
         } catch (Exception ex) {
 
             System.out.println(ex.getCause().getMessage());
-            return new ResponseEntity<Response>(new Response("Unable to Delete Currency"), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new Response("Unable to Delete Currency"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -146,10 +112,9 @@ public class CurrencyController {
     @GetMapping("/gets")
     public ResponseEntity<Page<CurrencyDTO>> showPage(Pageable pageable) {
 
-        System.out.println("Currency Pageable Called");
         try {
 
-            return new ResponseEntity<Page<CurrencyDTO>>(currencyService.findPage(pageable), HttpStatus.OK);
+            return new ResponseEntity<>(currencyService.findPage(pageable), HttpStatus.OK);
         } catch (Exception ex) {
             log.debug(ex.getMessage());
             return ResponseEntity.notFound().header(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase()).build();

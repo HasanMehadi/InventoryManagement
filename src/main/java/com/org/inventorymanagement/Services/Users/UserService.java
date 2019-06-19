@@ -1,4 +1,4 @@
-package com.org.inventorymanagement.Services;
+package com.org.inventorymanagement.Services.Users;
 
 import com.org.inventorymanagement.Entities.User;
 

@@ -1,4 +1,4 @@
-package com.org.inventorymanagement.Services;
+package com.org.inventorymanagement.Services.Brands;
 
 import com.org.inventorymanagement.Entities.Brand;
 import com.org.inventorymanagement.Models.BrandDTO;
@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface BrandService {
 
-    public Brand save(Brand brand);
+    public BrandDTO save(BrandDTO brandDTO);
     //public List<Brand> findAll();
-    public Brand getBrandById(long id);
-    public Brand update(Brand brand);
-    public Boolean delete(long id);
+    public BrandDTO getBrandById(BrandDTO brandDTO);
+    public BrandDTO update(BrandDTO brandDTO);
+    public Boolean delete(BrandDTO brandDTO);
     public Page<BrandDTO> findPage(Pageable pageable);
 }

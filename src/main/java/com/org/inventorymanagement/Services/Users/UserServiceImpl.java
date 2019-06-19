@@ -1,9 +1,9 @@
-package com.org.inventorymanagement.ServiceImplementation;
+package com.org.inventorymanagement.Services.Users;
 
 import com.org.inventorymanagement.Configurations.PasswordUtil;
 import com.org.inventorymanagement.Entities.User;
 import com.org.inventorymanagement.Repositories.UserRepository;
-import com.org.inventorymanagement.Services.UserService;
+import com.org.inventorymanagement.Services.Users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

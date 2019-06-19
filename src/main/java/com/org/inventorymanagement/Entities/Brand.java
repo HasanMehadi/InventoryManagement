@@ -17,9 +17,9 @@ public class Brand {
     private String brandDescr;
     private String brandCmnt;
     private String appBrandId;
-    @Column(nullable = true)
+    @Column(nullable = true, updatable = false)
     private Timestamp crtDttm;
-    @Column(nullable = true)
+    @Column(nullable = true, updatable = false)
     private Integer crtBy;
     @Column(nullable = true)
     private Timestamp updDttm;

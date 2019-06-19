@@ -2,7 +2,7 @@ package com.org.inventorymanagement.Controllers;
 
 
 import com.org.inventorymanagement.Configurations.Response;
-import com.org.inventorymanagement.Services.UserService;
+import com.org.inventorymanagement.Services.Users.UserService;
 import com.org.inventorymanagement.Entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

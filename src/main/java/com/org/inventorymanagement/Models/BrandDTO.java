@@ -16,6 +16,14 @@ public class BrandDTO extends BaseDTO implements Serializable {
     private Timestamp updDttm;
     private Integer updBy;
 
+    public BrandDTO(){
+
+    }
+
+    public BrandDTO(long brandId){
+        this.brandId = brandId;
+    }
+
     public Long getBrandId() {
         return brandId;
     }
