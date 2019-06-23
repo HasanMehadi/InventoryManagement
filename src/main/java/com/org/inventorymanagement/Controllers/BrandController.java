@@ -58,11 +58,14 @@ public class BrandController {
 
         BrandDTO brandDTO = new BrandDTO();
         brandDTO.setBrandId(id);
+        System.out.println(brandDTO);
 
         try {
-                return new ResponseEntity<>(brandService.getBrandById(brandDTO), HttpStatus.OK);
+            BrandDTO dto = brandService.getBrandById(brandDTO);
+                return new ResponseEntity<>(dto , HttpStatus.OK);
 
         } catch (Exception ex) {
+            System.out.println(ex.getCause().getMessage());
             brandDTO = new BrandDTO();
             brandDTO.setErrorCode(404);
             brandDTO.setErrorMsg("No Brand Found");

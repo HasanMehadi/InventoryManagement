@@ -27,14 +27,11 @@ public class JwtTokenUtil {
 
     public String getUsernameFromToken(String token){
 
-        System.out.println("get user name from token called");
-
         String username = null;
 
         try{
             final Claims claims = getClaimsFromToken(token);
             username = claims.getSubject();
-
 
             String stringToSearch = claims.getSubject();
             String exclusion = "email=";
@@ -49,8 +46,6 @@ public class JwtTokenUtil {
     }
 
     private Claims getClaimsFromToken(String token){
-
-        System.out.println("get claims from token called");
 
         Claims claims = null;
 
@@ -68,8 +63,6 @@ public class JwtTokenUtil {
 
     public boolean validateToken(String token , UserDetails userDetails){
 
-        System.out.println("validate token called ");
-
         JwtUser user = (JwtUser) userDetails;
 
         final String username = getUsernameFromToken(token);
@@ -79,8 +72,6 @@ public class JwtTokenUtil {
 
     private boolean isTokenExpire(String token){
 
-        System.out.println("is token expire called");
-
         final Date expiration = getExpirationFromToken(token);
 
         return expiration.before(new Date());
@@ -88,25 +79,19 @@ public class JwtTokenUtil {
 
     private Date getExpirationFromToken(String token){
 
-        System.out.println("get expiration from token called");
-
         Date expiration = null;
 
         try{
 
             final Claims claims = getClaimsFromToken(token);
             if(claims != null){
-                System.out.println("claims not null");
 
                 expiration = claims.getExpiration();
 
-                System.out.println(expiration);
             }else {
-                System.out.println("claims is null");
                 expiration = null;
             }
         }catch (Exception ex){
-            System.out.println("expiration error");
             expiration = null;
         }
 
@@ -114,7 +99,6 @@ public class JwtTokenUtil {
     }
 
     public String generateToken(JwtUser userDetails){
-        System.out.println("token generate called for user login");
 
         Map<String ,Object> claims = new HashMap<>();
         claims.put(CLAM_KEY_USERNAME, userDetails.getUser());
@@ -125,13 +109,11 @@ public class JwtTokenUtil {
 
     private String TokenGenerate(Map<String, Object> claims) {
 
-        System.out.println("token genrerate time ");
         return Jwts.builder().setClaims(claims).setExpiration(generateExpirationDate()).signWith(SignatureAlgorithm.HS512,secret).compact();
     }
 
     private Date generateExpirationDate() {
 
-        System.out.println("expiration date time created called");
         return new Date(System.currentTimeMillis()+ expiration * 1000);
     }
 }

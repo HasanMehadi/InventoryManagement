@@ -60,7 +60,7 @@ public class BrandServiceImpl implements BrandService {
     }*/
 
     @Override
-    @Cacheable(value = "brands", key = "#brandDTO.brandId")
+    @Cacheable(value = "brands", key = "#brandDTO.brandId",unless = "#result==null")
     @Transactional(rollbackFor = Exception.class, timeout = 5000, readOnly = true)
     public BrandDTO getBrandById(BrandDTO brandDTO) {
 
@@ -71,7 +71,11 @@ public class BrandServiceImpl implements BrandService {
 //            if (brand == null) {
 //                return null;
 //            }
-            return ModelEntityConversionUtil.convert(brandRepository.getOne(brandDTO.getBrandId()),BrandDTO.class);
+            System.out.println("------------------------");
+            System.out.println(brandDTO.getBrandId());
+            System.out.println("------------------------");
+            Brand brand = brandRepository.getOne(brandDTO.getBrandId());
+            return ModelEntityConversionUtil.convert(brand,BrandDTO.class);
         } catch (Exception ex) {
             System.out.println(ex.getCause().getMessage());
             return null;

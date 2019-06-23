@@ -32,14 +32,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception{
 
-        //System.out.println("configure authentication called");
         authenticationManagerBuilder.userDetailsService(this.userDetailsService).passwordEncoder(PasswordEncoder());
     }
 
     @Bean
     public PasswordEncoder PasswordEncoder(){
-
-        //System.out.println("password encoder called");
 
         return new BCryptPasswordEncoder();
     }
@@ -49,14 +46,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
 
-        //System.out.println("authentication manager bean called");
         return super.authenticationManagerBean();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        //System.out.println("http security called");
 
         http.csrf().disable().exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and().
                 sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().
@@ -68,6 +62,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 antMatchers("/metrics/**").permitAll().
                 antMatchers("/actuator").permitAll().
                 antMatchers("/actuator/**").permitAll().
+                antMatchers("/files/**").permitAll().
                 antMatchers(HttpMethod.OPTIONS).permitAll().
                 anyRequest().authenticated();
 

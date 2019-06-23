@@ -9,7 +9,17 @@ import org.ehcache.expiry.Duration;
 import org.ehcache.expiry.Expirations;
 import org.ehcache.jsr107.Eh107Configuration;*/
 import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.config.CacheConfiguration;
+import org.ehcache.config.CacheConfiguration;
+import org.ehcache.config.builders.CacheConfigurationBuilder;
+import org.ehcache.config.builders.ExpiryPolicyBuilder;
+import org.ehcache.config.builders.ResourcePoolsBuilder;
+import org.ehcache.config.units.MemoryUnit;
+import org.ehcache.core.statistics.StoreOperationOutcomes;
+import org.ehcache.expiry.Expirations;
+import org.ehcache.expiry.ExpiryPolicy;
+import org.ehcache.jsr107.Eh107Configuration;
+import org.ehcache.xml.model.TimeUnit;
+import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
@@ -18,16 +28,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.Duration;
+
 @Configuration
 @EnableCaching
 @ComponentScan(basePackages = "com.org.inventorymanagement")
-public class EhCacheConfig implements CachingConfigurer {
+public class EhCacheConfig{
 
-    /*@Bean
+    @Bean
     public JCacheManagerCustomizer jCacheManagerCustomizer() {
         return cm -> {
-            cm.createCache("users", cacheConfiguration());
-
+            cm.createCache("brands", cacheConfiguration());
+            cm.createCache("currencies", cacheConfiguration());
         };
     }
 
@@ -38,14 +50,15 @@ public class EhCacheConfig implements CachingConfigurer {
                         .heap(300, MemoryUnit.MB)
                         .build()
         )
-                .withExpiry(Expirations.timeToLiveExpiration(new Duration(1, TimeUnit.HOURS)))
-                .withExpiry(Expirations.timeToIdleExpiration(new Duration(10, TimeUnit.MINUTES)))
+
+                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(3600)))
+                .withExpiry(ExpiryPolicyBuilder.timeToIdleExpiration(Duration.ofSeconds(600)))
                 .build();
 
         return Eh107Configuration.fromEhcacheCacheConfiguration(cacheConfiguration);
-    }*/
+    }
 
-    @Bean(destroyMethod = "shutdown")
+    /*@Bean(destroyMethod = "shutdown",name = "")
     public CacheManager ehCacheManager(){
         CacheConfiguration cacheConfiguration = new CacheConfiguration();
         cacheConfiguration.setName("brands");
@@ -79,5 +92,5 @@ public class EhCacheConfig implements CachingConfigurer {
     @Override
     public CacheErrorHandler errorHandler() {
         return new SimpleCacheErrorHandler();
-    }
+    }*/
 }

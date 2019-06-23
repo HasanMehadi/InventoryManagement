@@ -30,8 +30,6 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        System.out.println("do filter internal called");
-
         String authToken = request.getHeader(tokenHeader);
 
         if(authToken != null && authToken.length()>7){
